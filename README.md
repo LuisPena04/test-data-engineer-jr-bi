@@ -6,15 +6,25 @@ Debe realizar un fork de este repositorio para desarrollar y entregar su trabajo
 
 1. Conocimiento teórico.
   - ¿Qué es una base de datos?
+    * Es un almacén o conjunto de datos estructurados o no estructurados con una relación entre sus tablas, que cumplen algún objetivo en específico
   - ¿A qué hace regerencia la integridad en Base de datos?
+    * Al que la información se almacene correctamente, sin alterar o modificar los datos que lo hagan erroneo.
   - ¿Cuál es el campo que dentro del registro permite la identificación exclusiva y univoca de cada registro?
+    * Primary Key
   - ¿El comando ALTER TABLE se utiliza para crear una nueva tabla en la base de datos?
+    *No
   - ¿Con que sentencia borras información?
+    * DELETE or TRUNCATE
   - ¿Qué palabra clave se usa para filtrar información?
+    * WHERE
   - ¿Como se le llama al diagrama que ayuda a visualizar la relación entre tablas de una base de datos?
+    * Modelo de entidad - relación
   - ¿Cuál es la sentencia para crear un procedimiento almacenado?
+    * CREATE PROCEDURE 
   - ¿Cuál es el comando que se utiliza para ver campos vacíos o desconocidos?
+    * WHERE IS NULL
   - ¿Cuál es el comando que crea un objeto dentro de una base de datos?
+    * CREATE
 
 2. Ejercicio práctico.  
 Dentro de la carpeta data se encuentra el archivo `Examen Práctico.xlsx` en el cual cada hoja del documento hace referencia a una tabla SQL, tomando como base este documento, conteste lo siguiente:
