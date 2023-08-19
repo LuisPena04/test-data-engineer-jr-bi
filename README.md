@@ -30,9 +30,29 @@ Debe realizar un fork de este repositorio para desarrollar y entregar su trabajo
 Dentro de la carpeta data se encuentra el archivo `Examen Práctico.xlsx` en el cual cada hoja del documento hace referencia a una tabla SQL, tomando como base este documento, conteste lo siguiente:
   - Que script se utilizaría para conocer el dato de:
     1. Insertar un registro en la tabla Tbl_Recuperacion
-    2. Eliminar de la tabla Dim_Cliente los registros de los clientes que pertenezcan al AgrupadorCliente 543.
-    3. Conocer el valor Total de ImpRecuperacion e ImpObjetivo por cliente correspondiente al año anterior (2020).
-    4. Conocer el valor de %ImpRecuperacion utilizando la fórmula: ImpRecuperacion / (ImpObjetivo(Mes Anterior) - ImpBonificacion)
+       * INSERT INTO Tbl_Recuperacion (AnioMes, ClaCliente, ImpRecuperacion)
+       * VALUES ('202308','120', 200.10)
+    3. Eliminar de la tabla Dim_Cliente los registros de los clientes que pertenezcan al AgrupadorCliente 543.
+       * DELETE Dim_Cliente
+       * WHERE ClaAgrupadorCliente='543'
+    5. Conocer el valor Total de ImpRecuperacion e ImpObjetivo por cliente correspondiente al año anterior (2020).
+       * SELECT DC.ClaCliente, NombreCliente, SUM(ImpRecuperacion) as ImpRecuperacion,  SUM(ImpObjetivo) as ImpObjetivo
+       * FROM Dim_Cliente DC
+       * INNER JOIN Tbl_Recuperacion TblRec ON DC.ClaCliente=TblRec.ClaCliente
+       * INNER JOIN Tbl_Objetivo TblObj ON DC.ClaCliente=TblObj.ClaCliente
+       * WHERE TblRec.AnioMes LIKE '2020%' 
+       * GROUP BY DC.ClaCliente,NombreCliente
+    7. Conocer el valor de %ImpRecuperacion utilizando la fórmula: ImpRecuperacion / (ImpObjetivo(Mes Anterior) - ImpBonificacion)
+       * SELECT DC.ClaCliente,NombreCliente, TblRec.AnioMes,
+                SUM(ImpRecuperacion) / (
+                 (SELECT SUM(ImpObjetivo)
+                 WHERE DATEADD(Month,-1,DATE(LEFT(TblRec.AnioMes,4),RIGTH(TblRec.AnioMes,2),'01'))
+                 - SUM(ImpBonificacion)) AS %ImpRecuperacion
+       * FROM Dim_Cliente DC
+       * INNER JOIN Tbl_Recuperacion TblRec ON DC.ClaCliente=TblRec.ClaCliente
+       * INNER JOIN Tbl_Objetivo TblObj ON DC.ClaCliente=TblObj.ClaCliente
+       * INNER JOIN Tbl_Bonificacion TblBon ON DC.ClaCliente=TblBon.ClaCliente
+       * GROUP BY DC.ClaCliente,NombreCliente,TblRec.AnioMes
 
   - Utilizando la herramienta Tableau (versión libre o de prueba) diseñe un dashboard que represente los datos de: ImpRecuperacion, ImpObjetivo e ImpBonificaciones de cada cliente y por periodo mensual. Nota: Sobre la página oficial de Tableau puede descargar la versión de prueba, la liga de descarga es: https://www.tableau.com/support/releases/desktop/2021.1.1
 
